@@ -36,10 +36,12 @@ const router = express.Router()
 
 app.use(router)
 
-router.get('/simple/get', function(req, res) {
-  res.json({
-    msg: 'Hello World'
-  })
+router.get('/simple/get', (req, res) => {
+  res.json(req.body)
+})
+
+router.post('/simple/post', (req, res) => {
+  res.json(req.body)
 })
 
 const port = 8081
