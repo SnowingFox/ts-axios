@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosRequestConfig, AxiosErrorConfig } from '../types/index'
+import { AxiosResponse, AxiosRequestConfig, AxiosErrorConfig } from '../types/interface'
 
 class AxiosError extends Error implements AxiosErrorConfig {
   public config: AxiosRequestConfig
