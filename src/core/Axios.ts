@@ -1,9 +1,4 @@
-import {
-  Axios as AxiosInterface,
-  AxiosPromise,
-  AxiosRequestConfig,
-  Method
-} from '../types/interface'
+import { Axios as AxiosInterface, AxiosPromise, AxiosRequestConfig, Method } from '../types'
 import dispatchRequest from './dispatchRequest'
 
 export default class Axios implements AxiosInterface {
@@ -38,7 +33,7 @@ export default class Axios implements AxiosInterface {
     return this.requestWidthoutData('options', url, config)
   }
 
-  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     return this.requestWidthData('post', data, url, config)
   }
 

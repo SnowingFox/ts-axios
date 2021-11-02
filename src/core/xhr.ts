@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types/interface'
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
 import { parseAllHeaders } from '../helpers/headers'
 import createError from '../helpers/error'
 

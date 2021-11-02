@@ -1,4 +1,4 @@
-import { AxiosInstance } from './types/interface'
+import { AxiosInstance } from './types'
 import Axios from './core/Axios'
 import { extend } from './helpers/utils'
 
