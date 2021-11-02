@@ -1,5 +1,26 @@
 import axios from '../../src/index'
 
-const url = 'http://localhost:3000/search'
+interface ResponseData<T = any> {
+  code: number
+  result: T
+  message: string
+}
 
-axios.get(`${url}?keywords=Intro`).then(res => console.log(res))
+interface User {
+  banner: Array<any>
+}
+
+const url = 'http://localhost:3000/banner'
+function getUser<T>() {
+  return axios(url).then(res => res.data)
+
+
+
+}
+async function test() {
+  const user = await getUser<User>()
+  console.log(user)
+}
+
+test()
+getUser<User>()

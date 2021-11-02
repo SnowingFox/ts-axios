@@ -7,7 +7,18 @@ import {
 import dispatchRequest from './dispatchRequest'
 
 export default class Axios implements AxiosInterface {
-  request(config: AxiosRequestConfig): AxiosPromise {
+  request(url: string | AxiosRequestConfig, config?: AxiosRequestConfig): AxiosPromise {
+    if (typeof url === 'string') {
+      if (!config) {
+        config = {}
+        config.url = url
+        config.method = 'GET'
+      } else {
+        config.url = url
+      }
+    } else {
+      config = url
+    }
     return dispatchRequest(config)
   }
 
@@ -27,7 +38,7 @@ export default class Axios implements AxiosInterface {
     return this.requestWidthoutData('options', url, config)
   }
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     return this.requestWidthData('post', data, url, config)
   }
 
@@ -48,7 +59,12 @@ export default class Axios implements AxiosInterface {
     )
   }
 
-  requestWidthData(method: Method, url: string, data?: any, config?: AxiosRequestConfig) {
+  requestWidthData(
+    method: Method,
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): AxiosPromise {
     return this.request(
       Object.assign(config || {}, {
         method,
