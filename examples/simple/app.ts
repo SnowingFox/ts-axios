@@ -1,24 +1,24 @@
 import axios from '../../src/index'
 
-interface ResponseData<T = any> {
-  banners: Array<any>
-}
-
-interface User {
-  banner: Array<any>
-}
-
 const url = 'http://localhost:3000/banner'
-function getUser<T>() {
-  return axios<ResponseData<T>>(url).then(res => res.data)
 
+axios.interceptors.request.use(config => {
+  config.headers.test += '1'
 
+  return config
+})
 
-}
-async function test() {
-  const user = await getUser<User>()
-  console.log(user.banners)
-}
+axios.interceptors.response.use(res => {
+  res.data = res.data
 
-test()
-getUser<User>()
+  return res
+})
+
+axios(url, {
+  headers: {
+    'test-type': 'appl',
+    test: 2
+  }
+}).then(res => {
+  console.log(res)
+})
