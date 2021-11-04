@@ -11,7 +11,7 @@ export default class InterceptorManager<T> implements AxiosInterceptorManager {
   constructor() {
     this.interceptors = []
   }
-  /**
+  /*
    * Add interceptor
    * @param resolved resolved function
    * @param rejected rejected function
