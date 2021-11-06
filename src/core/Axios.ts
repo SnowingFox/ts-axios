@@ -7,9 +7,8 @@ import {
   ResolvedFn,
   RejectedFn
 } from '../types'
-import InterceptorManager from './InterceptorManager'
+import InterceptorManager, { Interceptor } from './InterceptorManager'
 import dispatchRequest from './dispatchRequest'
-import { promises } from 'dns'
 
 export interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig>
@@ -31,15 +30,14 @@ export default class Axios implements AxiosInterface {
     }
   }
 
-  request(
-    url: string | AxiosRequestConfig,
-    config?: AxiosRequestConfig
-  ): AxiosPromise {
+  request(url: string | AxiosRequestConfig, config?: AxiosRequestConfig): AxiosPromise {
     if (typeof url === 'string') {
       if (!config) {
         config = config || {}
         config.url = url
+        config.headers = {}
       } else {
+        config.headers = config.headers || {}
         config.url = url
       }
     } else {
@@ -54,8 +52,13 @@ export default class Axios implements AxiosInterface {
     ]
 
     let promise = Promise.resolve(config)
+    let requestInterceptor: Interceptor<any>[] = []
 
     this.interceptors.request.forEach(interceptor => {
+      requestInterceptor.unshift(interceptor)
+    })
+
+    requestInterceptor.forEach(interceptor => {
       chain.unshift(interceptor)
     })
 
@@ -100,11 +103,7 @@ export default class Axios implements AxiosInterface {
     return this.requestWidthData('patch', data, url, config)
   }
 
-  requestWidthoutData(
-    method: Method,
-    url: string,
-    config?: AxiosRequestConfig
-  ): AxiosPromise {
+  requestWidthoutData(method: Method, url: string, config?: AxiosRequestConfig): AxiosPromise {
     return this.request(
       Object.assign(config || {}, {
         method,

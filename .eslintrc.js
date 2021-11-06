@@ -1,21 +1,25 @@
 module.exports = {
-  // 使用typescript解析器
-  parser: '@typescript-eslint/parser',
-  // 不同的解析器parser，parserOptions的值不相同，具体参考对应解析器文档
-  parserOptions: {
-    project: 'tsconfig.json',
-    sourceType: 'module'
-  },
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-  ],
   root: true,
   env: {
-    node: true,
-    jest: true
+    node: true
   },
-  ignorePatterns: ['.eslintrc.js'],
-  rules: {}
+  extends: [
+    'plugin:vue/essential',
+    '@vue/prettier',
+    'eslint:recommended',
+    '@vue/typescript/recommended',
+    '@vue/prettier/@typescript-eslint'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020,
+    parser: '@typescript-eslint/parser'
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'prefer-const': 'off'
+  }
 }
