@@ -14,7 +14,6 @@ export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromis
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformConfig(config)
   config.headers = transformRequestHeaders(config) || {}
-  console.log(config.headers)
   config.data = transformRequestData(config)
 }
 
