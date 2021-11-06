@@ -1,4 +1,5 @@
-import { isPlainObject, isEmptyPlainObject } from './utils'
+import { Method } from '../types'
+import { isPlainObject, isEmptyPlainObject, deepMerge } from './utils'
 
 /**
  * Converts the user's configuration header name to a standard header name
@@ -53,4 +54,20 @@ export function parseAllHeaders(headers: any): any {
   })
 
   return parsed
+}
+
+export function flattenHeaders(headers: any, method: Method): any {
+  if (!headers) {
+    return headers
+  }
+
+  headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
+
+  const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+
+  methodsToDelete.forEach(method => {
+    delete headers[method]
+  })
+
+  return headers
 }

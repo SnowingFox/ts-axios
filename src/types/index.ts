@@ -15,6 +15,7 @@ export type Method =
   | 'HEAD'
   | 'options'
   | 'OPTIONS'
+  | 'common'
 
 export interface AxiosRequestConfig {
   url?: string
@@ -24,6 +25,8 @@ export interface AxiosRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+
+  [propName: string]: any
 }
 
 export interface AxiosResponse<T = any> {
@@ -46,10 +49,10 @@ export interface AxiosErrorConfig extends Error {
 }
 
 export interface Axios {
-  request<T = any>(
-    url: string | AxiosRequestConfig,
-    config: AxiosRequestConfig
-  ): AxiosPromise<T>
+  defaults: AxiosRequestConfig
+  interceptors: Interceptors
+
+  request<T = any>(url: string | AxiosRequestConfig, config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
