@@ -47,7 +47,6 @@ export default class Axios implements AxiosInterface {
     } else {
       config = url
     }
-
     if (config.transformRequest) {
       this.defaults.transformRequest = processTransformRequest(config.transformRequest)
     }
