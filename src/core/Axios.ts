@@ -10,6 +10,7 @@ import {
 import InterceptorManager, { Interceptor } from './InterceptorManager'
 import dispatchRequest from './dispatchRequest'
 import mergeConfig from './mergeConfig'
+import { processTransformResponse, processTransformRequest } from '../helpers/data'
 
 export interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig>
@@ -47,8 +48,14 @@ export default class Axios implements AxiosInterface {
       config = url
     }
 
-    config = mergeConfig(this.defaults, config)
+    if (config.transformRequest) {
+      this.defaults.transformRequest = processTransformRequest(config.transformRequest)
+    }
+    if (config.transformResponse) {
+      this.defaults.transformResponse = processTransformResponse(config.transformResponse)
+    }
 
+    config = mergeConfig(this.defaults, config)
     const chain: PromiseChain[] = [
       {
         resolved: dispatchRequest,
