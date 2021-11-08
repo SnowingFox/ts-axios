@@ -5,12 +5,14 @@ import {
   AxiosResponse,
   Method,
   ResolvedFn,
-  RejectedFn
+  RejectedFn,
+  ICancelToken
 } from '../types'
 import InterceptorManager, { Interceptor } from './InterceptorManager'
 import dispatchRequest from './dispatchRequest'
 import mergeConfig from './mergeConfig'
 import { processTransformResponse, processTransformRequest } from '../helpers/data'
+import CancelToken from '../cancel/CancelToken'
 
 export interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig>
@@ -47,6 +49,7 @@ export default class Axios implements AxiosInterface {
     } else {
       config = url
     }
+
     if (config.transformRequest) {
       this.defaults.transformRequest = processTransformRequest(config.transformRequest)
     }
