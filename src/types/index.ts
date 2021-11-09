@@ -31,6 +31,7 @@ export interface AxiosRequestConfig {
   withCredentials?: boolean
   xsrfCookieName?: string
   xsrfHeaderName?: string
+  auth?: AxiosBasicCredentials
 
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
@@ -145,4 +146,9 @@ export interface ICancel {
 
 export interface CancelStatic {
   new (message?: string): ICancel
+}
+
+export interface AxiosBasicCredentials {
+  username: string
+  password: string
 }

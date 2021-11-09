@@ -44,9 +44,7 @@ const cors = {
 }
 
 router.get('/simple/get', (req, res) => {
-  res.json({
-    text: '1'
-  })
+  res.json(req.headers)
 })
 
 router.post('/simple/post', (req, res) => {
