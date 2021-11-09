@@ -16,9 +16,8 @@ instance.interceptors.request.use(config => {
 
 instance
   .get(url, {
-    auth: {
-      username: 'Jane',
-      password: 'abc'
+    validateStatus(status) {
+      return status <= 100
     }
   })
   .then(res => {
