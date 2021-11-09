@@ -104,6 +104,7 @@ export interface AxiosStaticInstance extends AxiosInstance {
   all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
   getUri(config: AxiosRequestConfig): string
   spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+  isAxiosError(val: any): boolean
 }
 
 export interface AxiosInterceptorManager<T = any> {

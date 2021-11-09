@@ -6,6 +6,7 @@ import mergeConfig from './core/mergeConfig'
 import CancelToken from './cancel/CancelToken'
 import Cancel, { isCancel } from './cancel/Cancel'
 import { transformConfig } from './core/dispatchRequest'
+import { isAxiosError } from './core/Error'
 
 function createInstance(initConfig: AxiosRequestConfig): AxiosStaticInstance {
   const context = new Axios(initConfig)
@@ -21,6 +22,7 @@ const axios = createInstance(defaults)
 axios.CancelToken = CancelToken
 axios.Cancel = Cancel
 axios.isCancel = isCancel
+axios.isAxiosError = isAxiosError
 
 axios.all = function(promises): Promise<any[]> {
   return Promise.all(promises)

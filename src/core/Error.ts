@@ -23,3 +23,7 @@ export default function createError(config: AxiosErrorConfig): AxiosError {
 
   return error
 }
+
+export function isAxiosError(val: any): boolean {
+  return typeof val !== 'undefined' && val instanceof AxiosError
+}

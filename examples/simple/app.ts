@@ -16,11 +16,15 @@ function getB() {
   })
 }
 
-axios.all([getA(), getB()]).then(res => {
-  const [resA, resB] = res
-
-  console.log(resA, resB)
-})
 axios.interceptors.response.use(function(res) {
   return res
 })
+
+function a(callback: (resolve, reject?) => any): any {
+  let resolve = 1
+  let reject = 2
+
+  callback(resolve, reject)
+}
+
+a(([resolve]) => {})
