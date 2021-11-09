@@ -2,18 +2,25 @@ import axios from '../../src/index'
 
 const url = `http://localhost:3000/`
 
-const instance = axios.create({
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-  withCredentials: true,
-  baseURL: 'http://localhost:3000/'
-})
-const config = {
-  url: '/banner',
-  params: {
+axios.defaults.baseURL = url
+
+function getA() {
+  return axios.get('/banner', {
     type: 1
-  },
-  baseURL: url
+  })
 }
 
-console.log(axios.getUri(config))
+function getB() {
+  return axios.get('/banner', {
+    type: 2
+  })
+}
+
+axios.all([getA(), getB()]).then(res => {
+  const [resA, resB] = res
+
+  console.log(resA, resB)
+})
+axios.interceptors.response.use(function(res) {
+  return res
+})

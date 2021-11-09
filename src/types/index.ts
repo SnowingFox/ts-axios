@@ -101,7 +101,7 @@ export interface AxiosStaticInstance extends AxiosInstance {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (val: any) => boolean
-  all<T>(promises: Array<T | Promise<T>>): Promise<T>
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
   getUri(config: AxiosRequestConfig): string
   spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
 }

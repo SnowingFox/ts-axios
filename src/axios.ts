@@ -22,7 +22,7 @@ axios.CancelToken = CancelToken
 axios.Cancel = Cancel
 axios.isCancel = isCancel
 
-axios.all = function(promises): Promise<any> {
+axios.all = function(promises): Promise<any[]> {
   return Promise.all(promises)
 }
 
@@ -32,8 +32,8 @@ axios.getUri = function(config: AxiosRequestConfig): string {
   return transformConfig(config)
 }
 
-axios.spread = function(callback: (...args: any[]) => any): (arr: any[]) => any {
-  return function warp(arr: any[]) {
+axios.spread = function(callback) {
+  return function warp(arr) {
     return callback.apply(null, arr)
   }
 }
