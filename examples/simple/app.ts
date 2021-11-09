@@ -1,6 +1,6 @@
 import axios from '../../src/index'
 
-const url = `http://localhost:8082/simple/get`
+const url = `http://localhost:3000/banner`
 
 const instance = axios.create({
   xsrfCookieName: 'XSRF-TOKEN',
@@ -16,8 +16,8 @@ instance.interceptors.request.use(config => {
 
 instance
   .get(url, {
-    validateStatus(status) {
-      return status <= 100
+    data: {
+      type: 1
     }
   })
   .then(res => {

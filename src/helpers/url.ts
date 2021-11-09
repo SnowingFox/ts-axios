@@ -1,4 +1,4 @@
-import { isPlainObject, isDate } from './utils'
+import { isPlainObject, isDate, isURLSearchParams } from './utils'
 
 interface URLOrigin {
   protocol: string
@@ -16,7 +16,11 @@ function encode(url: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function buildUrl(url: string, params?: any): string {
+export function buildUrl(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   if (!params) {
     return url
   }
@@ -24,33 +28,39 @@ export function buildUrl(url: string, params?: any): string {
   const parts: string[] = []
   let serializedParams
 
-  if (isPlainObject(params)) {
-    Object.keys(params).forEach(key => {
-      const val = params[key]
-      if (val === null || typeof val === 'undefined') {
-        return
-      }
-
-      let values: any[] = []
-      if (Array.isArray(val)) {
-        values = val
-        key += '[]'
-      } else {
-        values = [val]
-      }
-      //Ensure each val can build as string
-      values.forEach(item => {
-        if (isDate(item)) {
-          item = item.toISOString()
-        } else if (isPlainObject(item)) {
-          item = JSON.stringify(item)
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(url)
+  } else if (isURLSearchParams(params)) {
+    serializedParams = params.toString()
+  } else {
+    if (isPlainObject(params)) {
+      Object.keys(params).forEach(key => {
+        const val = params[key]
+        if (val === null || typeof val === 'undefined') {
+          return
         }
-        parts.push(`${encode(key)}=${encode(item)}`)
-      })
-    })
-  }
 
-  serializedParams = parts.join('&')
+        let values: any[] = []
+        if (Array.isArray(val)) {
+          values = val
+          key += '[]'
+        } else {
+          values = [val]
+        }
+        //Ensure each val can build as string
+        values.forEach(item => {
+          if (isDate(item)) {
+            item = item.toISOString()
+          } else if (isPlainObject(item)) {
+            item = JSON.stringify(item)
+          }
+          parts.push(`${encode(key)}=${encode(item)}`)
+        })
+      })
+    }
+
+    serializedParams = parts.join('&')
+  }
 
   if (serializedParams) {
     //Filter hash code
