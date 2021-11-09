@@ -1,10 +1,10 @@
 import { AxiosResponse, AxiosRequestConfig, AxiosErrorConfig } from '../types'
 
 class AxiosError extends Error implements AxiosErrorConfig {
-  public config: AxiosRequestConfig
-  public request?: any
-  public code?: string | null | undefined
-  public responese?: AxiosResponse | undefined
+  config: AxiosRequestConfig
+  request?: any
+  code?: string | null | undefined
+  responese?: AxiosResponse | undefined
 
   constructor(errorConfig: AxiosErrorConfig) {
     let { message, config, code, request, response } = errorConfig
@@ -15,8 +15,6 @@ class AxiosError extends Error implements AxiosErrorConfig {
     this.request = request
     this.code = code
     this.responese = response
-    //Fix a typescript bug
-    Object.setPrototypeOf(this, AxiosError.prototype)
   }
 }
 

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
 import { parseAllHeaders } from '../helpers/headers'
-import createError from '../helpers/error'
+import createError from './Error'
 import { isSameOrigin } from '../helpers/url'
 import cookie from '../helpers/cookie'
 import { isFormData } from '../helpers/utils'

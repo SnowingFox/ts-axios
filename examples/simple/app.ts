@@ -5,7 +5,8 @@ const url = `http://localhost:3000/banner`
 const instance = axios.create({
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-XSRF-TOKEN',
-  withCredentials: true
+  withCredentials: true,
+  baseURL: 'http://localhost:3000/'
 })
 
 instance.interceptors.request.use(config => {
@@ -15,8 +16,8 @@ instance.interceptors.request.use(config => {
 })
 
 instance
-  .get(url, {
-    data: {
+  .get('/banner', {
+    params: {
       type: 1
     }
   })
