@@ -37,7 +37,6 @@ export interface AxiosRequestConfig {
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
   validateStatus?: (status: number) => boolean
-  //Searlize params
   paramsSerializer?: (params: any) => string
 
   [propName: string]: any
@@ -92,12 +91,19 @@ export interface AxiosInstance extends Axios {
   interceptors: Interceptors
 }
 
-export interface AxiosStaticInstance extends AxiosInstance {
-  create(config?: AxiosRequestConfig): AxiosInstance
+export interface AxiosClassStatic {
+  new (config: AxiosRequestConfig): Axios
+}
 
+export interface AxiosStaticInstance extends AxiosInstance {
+  Axios: AxiosClassStatic
+  create(config?: AxiosRequestConfig): AxiosInstance
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (val: any) => boolean
+  all<T>(promises: Array<T | Promise<T>>): Promise<T>
+  getUri(config: AxiosRequestConfig): string
+  spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
 }
 
 export interface AxiosInterceptorManager<T = any> {

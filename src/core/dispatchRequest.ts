@@ -18,7 +18,7 @@ function processConfig(config: AxiosRequestConfig): void {
   config.headers = flattenHeaders(config.headers, config.method!)
 }
 
-function transformConfig(config: AxiosRequestConfig): string {
+export function transformConfig(config: AxiosRequestConfig): string {
   let { url, data, paramsSerializer, baseURL } = config
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url!)
