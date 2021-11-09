@@ -36,8 +36,17 @@ const router = express.Router()
 
 app.use(router)
 
+const cors = {
+  'Access-Control-Allow-Origin': 'http://localhost:8080',
+  'Access-Control-Allow-Credentials': true,
+  'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type'
+}
+
 router.get('/simple/get', (req, res) => {
-  res.json(req.body)
+  res.json({
+    text: '1'
+  })
 })
 
 router.post('/simple/post', (req, res) => {
@@ -47,7 +56,5 @@ router.post('/simple/post', (req, res) => {
 const port = 8082
 
 module.exports = app.listen(port, () => {
-  console.log(
-    `Server listening on http://localhost:${port},you can enter Ctrl+C to stop it`
-  )
+  console.log(`Server listening on http://localhost:${port},you can enter Ctrl+C to stop it`)
 })

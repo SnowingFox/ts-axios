@@ -1,13 +1,17 @@
 import axios from '../../src/index'
 
 const url = 'http://localhost:3000/banner'
-
-const instance = axios.create()
-
 document.cookie = 'a=b'
-
-instance(url, {
+const instance = axios.create({
+  xsrfCookieName: 'XSRF-TOKEN-D',
+  xsrfHeaderName: 'X-XSRF-TOKEN-D',
   withCredentials: true
-}).then(res => {
-  console.log(res)
 })
+
+instance
+  .get(url, {
+    type: 1
+  })
+  .then(res => {
+    console.log(res)
+  })
